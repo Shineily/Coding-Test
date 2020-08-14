@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/Shineily/Coding-Test/static/css/main.be5bf854.chunk.css",
+    "main.js": "/Shineily/Coding-Test/static/js/main.13d7fc02.chunk.js",
+    "main.js.map": "/Shineily/Coding-Test/static/js/main.13d7fc02.chunk.js.map",
+    "runtime-main.js": "/Shineily/Coding-Test/static/js/runtime-main.4cffaf60.js",
+    "runtime-main.js.map": "/Shineily/Coding-Test/static/js/runtime-main.4cffaf60.js.map",
+    "static/js/2.c2aee3ca.chunk.js": "/Shineily/Coding-Test/static/js/2.c2aee3ca.chunk.js",
+    "static/js/2.c2aee3ca.chunk.js.map": "/Shineily/Coding-Test/static/js/2.c2aee3ca.chunk.js.map",
+    "index.html": "/Shineily/Coding-Test/index.html",
+    "precache-manifest.79079dbc3116529aba95759fc2197ed0.js": "/Shineily/Coding-Test/precache-manifest.79079dbc3116529aba95759fc2197ed0.js",
+    "service-worker.js": "/Shineily/Coding-Test/service-worker.js",
+    "static/css/main.be5bf854.chunk.css.map": "/Shineily/Coding-Test/static/css/main.be5bf854.chunk.css.map",
+    "static/js/2.c2aee3ca.chunk.js.LICENSE.txt": "/Shineily/Coding-Test/static/js/2.c2aee3ca.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.4cffaf60.js",
+    "static/js/2.c2aee3ca.chunk.js",
+    "static/css/main.be5bf854.chunk.css",
+    "static/js/main.13d7fc02.chunk.js"
+  ]
+}
