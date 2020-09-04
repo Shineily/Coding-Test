@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-// import axios from '../axios';
+import React, { useCallback } from 'react';
 
 import ListSubheader from '@material-ui/core/ListSubheader';
 import List from '@material-ui/core/List';
@@ -63,27 +62,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NestedList(props) {
+export const NestedList = React.memo((props) => {
   const classes = useStyles();
-  const [data, setData] = React.useState(props.dataprops);
+  const data = props.dataprops;
 
-  const products = data.subcategories;
-  const [open, setOpen] = React.useState(
-    new Array(products.length).fill(false)
-  );
+  console.log(data);
+
+  const [open, setOpen] = React.useState(new Array(data.length).fill(false));
   const [text, setText] = React.useState('');
 
-  const handleClick = (index) => () => {
-    open[index] = !open[index];
-    setOpen([...open]);
-  };
-  // console.log(text);
+  const handleClick = useCallback(
+    (index) => () => {
+      open[index] = !open[index];
+      setOpen([...open]);
+    },
+    [open]
+  );
 
-  const searchText = (event) => {
+  const searchText = useCallback((event) => {
     setText(event.target.value);
-  };
-
-  // console.log(text);
+  }, []);
 
   return (
     <List
@@ -110,56 +108,38 @@ export default function NestedList(props) {
       }
       className={classes.root}
     >
-      {data.subcategories.length > 0
-        ? data.subcategories
-            .map((sub) => {
-              const products = sub.products.filter((prod) =>
-                prod.translations.en.title
-                  .toLowerCase()
-                  .includes(text.toLowerCase())
-              );
-              return { ...sub, products };
-            })
-            .filter((sub) => sub.products.length > 0)
-            .map((sub, index) => (
-              <div>
-                <ListItem button onClick={handleClick(index)}>
-                  <ListItemText
-                    primary={`${sub.translations.en.title} (${sub.translations.es.title})`}
-                  />
-                  {open[index] ? <ExpandLess /> : <ExpandMore />}
-                </ListItem>
-                <Collapse in={open[index]} timeout='auto' unmountOnExit>
-                  {sub.products.map((prod, ind) => (
-                    <div>
-                      <List component='div' disablePadding>
-                        <ListItem button className={classes.nested}>
-                          <ListItemText
-                            primary={prod.translations.en.title}
-                            secondary={prod.translations.es.title}
-                          />
-                        </ListItem>
-                      </List>
-                    </div>
-                  ))}
-                </Collapse>
-              </div>
-            ))
-        : data.products
-            .filter((prod) =>
-              prod.translations.en.title
-                .toLowerCase()
-                .includes(text.toLowerCase())
-            )
-            .map((sub, index) => (
-              <div>
-                <ListItem button onClick={handleClick(index)}>
-                  <ListItemText
-                    primary={`${sub.translations.en.title} (${sub.translations.es.title})`}
-                  />
-                </ListItem>
-              </div>
-            ))}
+      {data
+        .map((sub) => {
+          const products = sub.products.filter((prod) =>
+            prod.translations.en.title
+              .toLowerCase()
+              .includes(text.toLowerCase())
+          );
+          return { ...sub, products };
+        })
+        .filter((sub) => sub.products.length > 0)
+        .map(({ id, products, translations }, index) => (
+          <div key={id}>
+            <ListItem button onClick={handleClick(index)}>
+              <ListItemText
+                primary={`${translations.en.title} (${translations.es.title})`}
+              />
+              {open[index] ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+            <Collapse in={open[index]} timeout='auto' unmountOnExit>
+              {products.map(({ translations, id }) => (
+                <List component='div' disablePadding key={id}>
+                  <ListItem button className={classes.nested}>
+                    <ListItemText
+                      primary={translations.en.title}
+                      secondary={translations.es.title}
+                    />
+                  </ListItem>
+                </List>
+              ))}
+            </Collapse>
+          </div>
+        ))}
     </List>
   );
-}
+});
